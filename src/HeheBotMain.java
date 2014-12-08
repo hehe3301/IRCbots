@@ -13,7 +13,8 @@ public class HeheBotMain {
         // Connect to the IRC server.
         bot.connect("irc.esper.net");
 
-        // Join the #pircbot channel.
+        bot.identify("Changeme2014");
+        // Join the #WAMM channel.
         bot.joinChannel("#WAMM");
         
     }
