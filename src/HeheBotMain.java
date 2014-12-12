@@ -1,4 +1,3 @@
-import org.jibble.pircbot.*;
 
 public class HeheBotMain {
 
@@ -13,9 +12,8 @@ public class HeheBotMain {
 		// Connect to the IRC server.
 		bot.connect("irc.esper.net");
 		// Join the #WAMM channel.
-		bot.joinChannel("#WAMM");
-		bot.joinChannel("#WAMM_HE");
-		bot.joinChannel("#testing");
+		bot.joinChan("#WAMM");
+		bot.joinChan("#WAMM_HE");
 
 	}
 
