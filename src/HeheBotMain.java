@@ -14,6 +14,7 @@ public class HeheBotMain {
 		// Join the #WAMM channel.
 		bot.joinChan("#WAMM");
 		bot.joinChan("#WAMM_HE");
+		bot.joinChan("#nupa");
 
 	}
 

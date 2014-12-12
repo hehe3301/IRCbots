@@ -77,7 +77,7 @@ public class HeheBot extends PircBot {
 								+ line[1]);
 					}
 
-				}else if (line[1].equalsIgnoreCase("unignore")
+				} else if (line[1].equalsIgnoreCase("unignore")
 						&& admins.containsKey(sender)) {
 					if (line.length == 3) {
 						sendMessage(channel, "Will stop telling " + line[2]
@@ -102,7 +102,7 @@ public class HeheBot extends PircBot {
 	}
 
 	/**
-	 * 
+	 * When someone changes their name
 	 */
 	public void onNickChange(String oldNick, String login, String hostname,
 			String newNick) {
@@ -125,8 +125,10 @@ public class HeheBot extends PircBot {
 	}
 
 	/**
+	 * this program joins the bot into the chan
 	 * 
 	 * @param chan
+	 *            - the chan to join
 	 */
 	public void joinChan(String chan) {
 		joinChannel(chan);
@@ -140,38 +142,58 @@ public class HeheBot extends PircBot {
 			chanLogs.put(chan, bufferWritter);
 		} catch (IOException e) {
 			e.printStackTrace();
-		} catch (ConcurrentModificationException derp){
-			//herplederp
+		} catch (ConcurrentModificationException derp) {
+			// herplederp
 		}
 
 	}
 
-	public void quit(String chan) throws IOException{
+	/**
+	 * Prints to a chanel
+	 * 
+	 * @param chan
+	 * @param msg
+	 */
+	public void say(String chan, String msg) {
+		sendMessage(chan, msg);
+		log(chan, this.getName() + ": " + msg + "\n");
+
+	}
+
+	/**
+	 * This command quits a chan and closes the log for that chan
+	 * 
+	 * @param chan
+	 *            - the chan to quit
+	 * @throws IOException
+	 */
+	public void quit(String chan) throws IOException {
 		say(chan, "Goodbye all! admin told me to quit");
 		chanLogs.get(chan).close();
-		
 		println("Closed: " + chan);
 		this.partChannel(chan, "Admin told me to quit");
 	}
+
 	/**
 	 * 
 	 */
 	public void cleanQuit() {
-		while(chanLogs.size()>0){
+		while (chanLogs.size() > 0) {
 			try {
-				String chan = (String) chanLogs.keySet().toArray()[0]; //selects a chan
-				quit(chan); //removes us form the chan, closes the log
-				chanLogs.remove(chan); //removes the chan form the lit of logs
+				String chan = (String) chanLogs.keySet().toArray()[0]; // selects
+																		// a
+																		// chan
+				quit(chan); // removes us form the chan, closes the log
+				chanLogs.remove(chan); // removes the chan form the lit of logs
 			} catch (IOException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
-			} finally {
-				chanLogs.clear();
 			}
 		}
-			}
+		chanLogs.clear();
+	}
 
-	public void log(String chan, String toLog){
+	public void log(String chan, String toLog) {
 		try { // -----Logs the message-----
 			chanLogs.get(chan).write(toLog);
 		} catch (IOException e) {
@@ -179,12 +201,7 @@ public class HeheBot extends PircBot {
 			e.printStackTrace();
 		}
 	}
-	
-	public void say(String chan, String msg){
-		sendMessage(chan, msg);
-		log(chan, this.getName() + ": " + msg + "\n");
-		
-	}
+
 	/**
 	 * Generates a random int between min and max
 	 * 
