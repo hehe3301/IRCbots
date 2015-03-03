@@ -13,7 +13,8 @@ public class HeheBot extends PircBot {
 	private ArrayList<String> ignoreList;
 
 	public HeheBot() {
-		this.setName("hehe|bot");
+		//this.setName("hehe|bot");
+		this.setName("dickbutt");
 		admins.put("hehe", "pass");
 		try {
 			File ignoreFile = new File("ignore.txt"); // opens the ignore list
@@ -39,7 +40,7 @@ public class HeheBot extends PircBot {
 		ignoreList = new ArrayList<String>();
 		ignoreList.add("Mewtwo");
 		ignoreList.add("Inumuta");
-		ignoreList.add("RX14");
+		//ignoreList.add("RX14");
 	}
 
 	/**
@@ -58,15 +59,18 @@ public class HeheBot extends PircBot {
 		// ------parses the line ------
 		if (!ignoreList.contains(sender) && line.length >= 2) {
 			if (line[0].equalsIgnoreCase(this.getName() + ":")) {
-				if (line[1].equalsIgnoreCase("Quit")
+				if (line[1].equalsIgnoreCase("Quit") //if we are being told to quit all
 						&& admins.containsKey(sender)) {
 					this.cleanQuit();
-				} else if (line[1].equalsIgnoreCase("leave")
+				} else if (line[1].equalsIgnoreCase("leave")//leavs a channel
 						&& admins.containsKey(sender)) {
-					sendMessage(channel, "Goodbye all! " + sender
-							+ " told me to quit");
-					this.partChannel(channel, "Admin told me to quit");
-				} else if (line[1].equalsIgnoreCase("ignore")
+					try {
+						quit(channel);
+					} catch (IOException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
+				} else if (line[1].equalsIgnoreCase("ignore")//adds someone to the ignore list
 						&& admins.containsKey(sender)) {
 					if (line.length == 3) {
 						sendMessage(channel, "Will tell " + line[2]
@@ -77,7 +81,7 @@ public class HeheBot extends PircBot {
 								+ line[1]);
 					}
 
-				} else if (line[1].equalsIgnoreCase("unignore")
+				} else if (line[1].equalsIgnoreCase("unignore")//unignores someone
 						&& admins.containsKey(sender)) {
 					if (line.length == 3) {
 						sendMessage(channel, "Will stop telling " + line[2]
@@ -88,14 +92,14 @@ public class HeheBot extends PircBot {
 								+ line[1]);
 					}
 
-				} else {
+				} else { //if i dont know how to do a command
 					sendMessage(channel, "Sorry " + sender
-							+ " i dont know how to do that!");
+							+ " I dont know how to do that!");
 				}
 			}
 
-		} else if (message.contains("hehe") || (message.contains("he he"))
-				|| (message.contains("Hehe")) || (message.contains("HEHE"))) {
+		} else if (message.contains("hehe") || (message.contains("Hehe")) //if the message is a ping for hehe
+				|| (message.contains("HEHE"))) {
 			if (!ignoreList.contains(sender))
 				sendMessage(channel, "" + hehe[randInt(0, hehe.length - 1)]);
 		}
@@ -168,7 +172,7 @@ public class HeheBot extends PircBot {
 	 * @throws IOException
 	 */
 	public void quit(String chan) throws IOException {
-		say(chan, "Goodbye all! admin told me to quit");
+		
 		chanLogs.get(chan).close();
 		println("Closed: " + chan);
 		this.partChannel(chan, "Admin told me to quit");
@@ -180,9 +184,9 @@ public class HeheBot extends PircBot {
 	public void cleanQuit() {
 		while (chanLogs.size() > 0) {
 			try {
-				String chan = (String) chanLogs.keySet().toArray()[0]; // selects
-																		// a
-																		// chan
+				// selects a chan
+				String chan = (String) chanLogs.keySet().toArray()[0];
+				say(chan, "Goodbye all! admin told me to quit");
 				quit(chan); // removes us form the chan, closes the log
 				chanLogs.remove(chan); // removes the chan form the lit of logs
 			} catch (IOException e) {
@@ -191,8 +195,11 @@ public class HeheBot extends PircBot {
 			}
 		}
 		chanLogs.clear();
+		
+		System.exit(0);
 	}
 
+	// Adds an entry to a log
 	public void log(String chan, String toLog) {
 		try { // -----Logs the message-----
 			chanLogs.get(chan).write(toLog);

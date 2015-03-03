@@ -15,6 +15,10 @@ public class HeheBotMain {
 		bot.joinChan("#WAMM");
 		bot.joinChan("#WAMM_HE");
 		bot.joinChan("#nupa");
+		//while(true){
+		//	bot.sendMessage("#WAMM", "sonicspin stfu");
+		//}
+		
 
 	}
 
