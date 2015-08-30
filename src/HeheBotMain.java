@@ -13,11 +13,7 @@ public class HeheBotMain {
 		bot.connect("irc.esper.net");
 		// Join the #WAMM channel.
 		bot.joinChan("#WAMM");
-		bot.joinChan("#WAMM_HE");
-		bot.joinChan("#nupa");
-		//while(true){
-		//	bot.sendMessage("#WAMM", "sonicspin stfu");
-		//}
+		
 		
 
 	}

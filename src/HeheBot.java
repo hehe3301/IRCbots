@@ -14,7 +14,7 @@ public class HeheBot extends PircBot {
 
 	public HeheBot() {
 		//this.setName("hehe|bot");
-		this.setName("dickbutt");
+		this.setName("heheBot");
 		admins.put("hehe", "pass");
 		try {
 			File ignoreFile = new File("ignore.txt"); // opens the ignore list
